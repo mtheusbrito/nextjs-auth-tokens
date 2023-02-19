@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
-import React, { ChangeEvent, useState,FormEvent } from "react";
-
+import React, { ChangeEvent, useState, FormEvent } from "react";
+import { login } from "../services/auth/authServide";
 const HomeScreen: React.FC = () => {
   const [values, setValues] = useState({
-    usuario: "mariosouto",
+    usuario: "omariosouto",
     senha: "safepassword",
   });
-  const { push } = useRouter()
+  const { push } = useRouter();
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const fieldValue = e.target.value;
     const fieldName = e.target.name;
@@ -18,11 +18,20 @@ const HomeScreen: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: FormEvent) =>{
-    e.preventDefault()
-    push('/auth-page-ssr')
-    
-  }
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await login({
+        username: values.usuario,
+        password: values.senha,
+      });
+      push("/auth-page-ssr");
+    } catch (err: any) {
+      alert('Usuario ou senha estão inválidos');
+      
+    }
+  };
   return (
     <div>
       <h1>Login</h1>
@@ -44,9 +53,7 @@ const HomeScreen: React.FC = () => {
           <button>Entrar</button>
         </div>
 
-        <pre>
-          {JSON.stringify(values, null, 2)}
-        </pre>
+        <pre>{JSON.stringify(values, null, 2)}</pre>
       </form>
     </div>
   );
