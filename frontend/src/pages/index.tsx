@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { ChangeEvent, useState, FormEvent } from "react";
-import { login } from "../services/auth/authServide";
+import { login } from "../services/auth/authService";
 const HomeScreen: React.FC = () => {
   const [values, setValues] = useState({
     usuario: "omariosouto",

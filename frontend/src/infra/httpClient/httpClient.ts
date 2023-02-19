@@ -14,9 +14,11 @@ export const HttpClient = async (
     },
     body: body ? JSON.stringify(body) : null,
   }).then(async (response) => {
+    const responseJSON = await response.json();
     return {
+      
       ok: response.ok,
-      body: await response.json(),
+      body: responseJSON.data,
     };
   });
 };
