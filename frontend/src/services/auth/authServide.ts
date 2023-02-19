@@ -1,19 +1,18 @@
+import { HttpClient } from "../../infra/httpClient/httpClient";
+
 type LoginProps = {
   username: string;
   password: string;
 };
 const login = async (props: LoginProps) => {
-  await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/login`, {
+  await HttpClient(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/login`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(props),
-  }).then(async (response) => {
+    
+  }, {...props}).then(async (response) => {
     if (!response.ok) {
       throw new Error("Usuário ou senha inválido");
     } else {
-      console.log(await response.json());
+      console.log(await response.body);
     }
   });
 };
