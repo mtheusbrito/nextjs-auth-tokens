@@ -1,26 +1,21 @@
 // Arquitetura exagonal
 // Ports e Adapters
-
+import axios, { AxiosRequestConfig } from 'axios';
+type Response = {
+  data: any,
+  ok: boolean
+}
 export const HttpClient = async (
-  url: RequestInfo | URL,
-  options: RequestInit,
-  body?: object
-) => {
+  options: AxiosRequestConfig,
+) :Promise<Response> => {
   
-  return await fetch(url, {
-   
-    headers: {
-      "Content-Type": "application/json",
-    },
-    ...options,
-    body: body ? JSON.stringify(body) : null,
-  }).then(async (response) => {
-    const {data} = await response.json();
-    
-    return {
-      
-      ok: response.ok,
-      data: data,
-    };
+  const { data , status } = await axios({url: options.url, method: options.method, headers:{
+    ...options.headers,
+    'Content-Type': 'application/json'},
+    data: options.data
   });
+  return {
+    data: data.data,
+    ok: status === 200 || status === 201
+  }
 };

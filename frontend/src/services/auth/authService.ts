@@ -7,34 +7,24 @@ type LoginProps = {
 };
 export const authSession = {
   async login(props: LoginProps) {
-    await HttpClient(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/login`,
-      {
-        method: "POST",
-      },
-      { ...props }
-    ).then(async (response) => {
-      if (!response.ok) {
-        throw new Error("Usuário ou senha inválido");
-      } else {
-        const data = await response.data;
-        tokenService.save({ accessToken: data.access_token });
-      }
-    });
+    const { data , ok} = await HttpClient({url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/login`, method: "POST", data: props})
+        if(!ok){
+          throw new Error("Usuário ou senha inválido");
+        }
+        const { refresh_token, access_token } = data; 
+        tokenService.save({ accessToken: access_token })
+
+       const { data :refreshData } = await HttpClient({url: `${process.env.NEXT_PUBLIC_NEXT_URL}/api/refresh`, method: "POST", data: {refresh_token}})
+        console.log(refreshData)
+
+
+
+        
   },
 
   async getSession(ctx?: any) {
     const token = tokenService.get({ ctx });
-
-    
-      const { data, ok } = await HttpClient(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/session`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        const { data, ok } = await HttpClient({url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/session`,method: 'GET', headers:{"Authorization": `Bearer ${token}`} }
       );
       
       if(!ok){
