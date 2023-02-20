@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { ChangeEvent, useState, FormEvent } from "react";
-import { login } from "../services/auth/authService";
+import {authSession} from "../services/auth/authService";
 const HomeScreen: React.FC = () => {
   const [values, setValues] = useState({
     usuario: "omariosouto",
@@ -22,7 +22,7 @@ const HomeScreen: React.FC = () => {
     e.preventDefault();
 
     try {
-      await login({
+      await authSession.login({
         username: values.usuario,
         password: values.senha,
       });

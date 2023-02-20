@@ -7,18 +7,20 @@ export const HttpClient = async (
   body?: object
 ) => {
   
-  return fetch(url, {
-    ...options,
+  return await fetch(url, {
+   
     headers: {
       "Content-Type": "application/json",
     },
+    ...options,
     body: body ? JSON.stringify(body) : null,
   }).then(async (response) => {
-    const responseJSON = await response.json();
+    const {data} = await response.json();
+    
     return {
       
       ok: response.ok,
-      body: responseJSON.data,
+      data: data,
     };
   });
 };

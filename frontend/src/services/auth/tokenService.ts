@@ -10,7 +10,7 @@ const ONE_HOUR = ONE_MINUTE * 60;
 const ONE_DAY = ONE_HOUR * 24;
 const ONE_YEAR = ONE_DAY * 365;
 type SaveProps = {};
-export const tokenSerice = {
+export const tokenService = {
   save({ accessToken, ctx = null }: { accessToken: string; ctx?: any }): void {
     // globalThis?.localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
     // globalThis?.sessionStorage.setItem(ACCESS_TOKEN_KEY, accessToken);

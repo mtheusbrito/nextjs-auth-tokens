@@ -1,18 +1,16 @@
-import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
-import nookies from 'nookies'
 import React from "react";
-import { tokenSerice } from "../services/auth/tokenService";
+import { session } from "../services/auth/session";
 
-// import { Container } from './styles';
-type Props ={
-  token?: string
-}
-const AuthPageSSR: React.FC<Props> = ({token}) => {
+
+type Props = {
+  session?: any;
+};
+const AuthPageSSR: React.FC<Props> = (props) => {
   return (
     <div>
       <h1>Auth page SSR</h1>
 
-      {JSON.stringify(token, null, 2)}
+      {JSON.stringify(props, null, 2)}
     </div>
   );
 };
@@ -20,15 +18,11 @@ const AuthPageSSR: React.FC<Props> = ({token}) => {
 export default AuthPageSSR;
 
 
-export const getServerSideProps = async (context: GetServerSidePropsContext) : Promise<GetServerSidePropsResult<Props>> => {
 
-  const cookies = nookies.get(context);
-  console.log(cookies)
-  
+export const getServerSideProps = session.withSession((ctx) => {
   return {
-    props:{
-        token: tokenSerice.get({ctx: context})  
-    }
-  }
-
-}
+    props: {
+      session: ctx.req.session,
+    },
+  };
+});

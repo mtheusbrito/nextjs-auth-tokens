@@ -1,13 +1,27 @@
 import React from "react";
+import { withSessionHOC } from "../services/auth/withSessionHOC";
 
-// import { Container } from './styles';
 
-const AuthPageStatic: React.FC = () => {
+type Props = {
+  msg: string,
+  session: any
+}
+const AuthPageStatic: React.FC<Props> = (props) => {
   return (
     <div>
       <h1>Auth page Static</h1>
+      <p>{JSON.stringify(props, null, 2)}</p>
     </div>
   );
 };
 
-export default AuthPageStatic;
+export default withSessionHOC(AuthPageStatic);
+
+export const getStaticProps = () =>{
+  return {
+    props:{
+      msg: 'teste'
+    }
+  }
+
+}
