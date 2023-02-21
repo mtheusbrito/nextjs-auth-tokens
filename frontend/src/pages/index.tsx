@@ -26,7 +26,7 @@ const HomeScreen: React.FC = () => {
         username: values.usuario,
         password: values.senha,
       });
-      push("/auth-page-ssr");
+      push("/auth-page-static");
     } catch (err: any) {
       alert('Usuario ou senha estão inválidos');
       

@@ -1,3 +1,4 @@
+import { GetServerSidePropsContext } from "next";
 import React from "react";
 import { session } from "../services/auth/session";
 
@@ -18,11 +19,20 @@ const AuthPageSSR: React.FC<Props> = (props) => {
 export default AuthPageSSR;
 
 
+// export const getServerSideProps = (ctx: GetServerSidePropsContext) =>{
+//   return {
+//     props:{
+//       session: ctx.req.cookies 
+//     }
+//   }
 
-export const getServerSideProps = session.withSession((ctx) => {
+// }
+export const getServerSideProps = session.withSession((ctx : Partial<GetServerSidePropsContext> & { req:{
+    session: any
+}}) => {
   return {
     props: {
-      session: ctx.req.session,
+      session: ctx.req.cookies,
     },
   };
 });
