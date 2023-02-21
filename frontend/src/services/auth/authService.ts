@@ -14,8 +14,8 @@ export const authSession = {
         }
         const { refresh_token, access_token } = data; 
         tokenService.save({ accessToken: access_token })
-      
-       await HttpClient(`${process.env.NEXT_PUBLIC_NEXT_URL}/api/refresh`, {method: "POST", body: {refresh_token: refresh_token}})
+        
+        await HttpClient(`${process.env.NEXT_PUBLIC_NEXT_URL}/api/refresh`, {method: "POST", body: {refresh_token: refresh_token}})
         
 
 
