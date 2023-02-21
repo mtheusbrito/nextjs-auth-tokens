@@ -1,4 +1,5 @@
 import { GetStaticPropsContext } from "next";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { tokenService } from "../services/auth/tokenService";
 import { withSessionHOC } from "../services/auth/withSessionHOC";
@@ -20,6 +21,10 @@ const AuthPageStatic: React.FC<Props> = (props) => {
     <div>
       <h1>Auth page Static</h1>
       <p>{JSON.stringify(tokens, null, 2)}</p>
+
+      <Link href={'/auth-page-ssr'}>
+        <a>Auth Page SSR</a>
+      </Link>
     </div>
   );
 };

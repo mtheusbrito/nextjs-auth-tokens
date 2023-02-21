@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext } from "next";
+import Link from "next/link";
 import React from "react";
 import { session } from "../services/auth/session";
 
@@ -11,7 +12,12 @@ const AuthPageSSR: React.FC<Props> = (props) => {
     <div>
       <h1>Auth page SSR</h1>
 
-      {JSON.stringify(props, null, 2)}
+      <p>{JSON.stringify(props, null, 2)}</p>
+      <Link href={'/auth-page-static'}>
+        <a>Auth Page Static</a>
+      </Link>
+
+
     </div>
   );
 };

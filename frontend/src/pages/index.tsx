@@ -3,7 +3,7 @@ import React, { ChangeEvent, useState, FormEvent } from "react";
 import {authSession} from "../services/auth/authService";
 const HomeScreen: React.FC = () => {
   const [values, setValues] = useState({
-    usuario: "omariosouto",
+    usuario: "teste",
     senha: "safepassword",
   });
   const { push } = useRouter();
